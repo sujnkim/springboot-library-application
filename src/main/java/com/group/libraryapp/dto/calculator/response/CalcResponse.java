@@ -5,10 +5,10 @@ public class CalcResponse {
     private final int minus;
     private final int multiply;
 
-    public CalcResponse(int add, int minus, int multiply) {
-        this.add = add;
-        this.minus = minus;
-        this.multiply = multiply;
+    public CalcResponse(int num1, int num2) {
+        this.add = num1 + num2;
+        this.minus = num1 - num2;
+        this.multiply = num1 * num2;
     }
 
     public int getAdd() {

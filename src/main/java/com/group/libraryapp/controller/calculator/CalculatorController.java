@@ -30,11 +30,7 @@ public class CalculatorController {
             @RequestParam int num1,
             @RequestParam int num2
     ) {
-        return new CalcResponse(
-                num1 + num2,
-                num1 - num2,
-                num1 * num2
-        );
+        return new CalcResponse(num1, num2);
     }
 
     @PostMapping("/api/v1/numbers-sum")
