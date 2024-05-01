@@ -1,5 +1,6 @@
 package com.group.libraryapp.controller.calculator;
 
+import com.group.libraryapp.dto.calculator.request.CalculatorAddNumbersRequest;
 import com.group.libraryapp.dto.calculator.request.CalculatorAddRequest;
 import com.group.libraryapp.dto.calculator.request.CalculatorMultiplyRequest;
 import com.group.libraryapp.dto.calculator.response.CalcResponse;
@@ -34,6 +35,15 @@ public class CalculatorController {
                 num1 - num2,
                 num1 * num2
         );
+    }
+
+    @PostMapping("/api/v1/numbers-sum")
+    public Integer addAllNumbers(
+            @RequestBody CalculatorAddNumbersRequest request
+    ){
+        return request.getNumbers().stream()
+                .mapToInt(Integer::intValue)
+                .sum();
     }
 
     @GetMapping("/api/v1/day-of-the-week")
