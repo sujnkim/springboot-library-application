@@ -20,30 +20,16 @@ public class UserController {
         userService = new UserService(jdbcTemplate);
     }
 
+
     @PostMapping("/user")
     public void saveUser(@RequestBody UserCreateRequest request) {
-        //users.add(new User(request.getName(), request.getAge()));
-
-        String sql = "INSERT INTO user(name, age) VALUES(?,?)";
-        jdbcTemplate.update(sql, request.getName(), request.getAge());
-
+        userService.saveUser(request);
     }
+
 
     @GetMapping("/user")
     public List<UserResponse> getUsers() {
-//        List<UserResponse> responses = new ArrayList<>();
-//        for (int i = 0; i < users.size(); i++) {
-//            responses.add(new UserResponse(i + 1, users.get(i)));
-//        }
-//        return responses;
-
-        String sql = "SELECT * FROM user";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> {
-            long id = rs.getLong("id");
-            String name = rs.getString("name");
-            int age = rs.getInt("age");
-            return new UserResponse(id, name, age);
-        });
+        return userService.getUsers();
     }
 
 
@@ -51,6 +37,7 @@ public class UserController {
     public void updateUser(@RequestBody UserUpdateRequest request) {
         userService.updateUser(request);
     }
+
 
     @DeleteMapping("/user")
     public void deleteUser(@RequestParam String name) {
