@@ -10,7 +10,6 @@ public class UserService {
 
     public UserService(JdbcTemplate jdbcTemplate) {
         userRepository = new UserRepository(jdbcTemplate);
-
     }
 
     public void updateUser(UserUpdateRequest request) {
