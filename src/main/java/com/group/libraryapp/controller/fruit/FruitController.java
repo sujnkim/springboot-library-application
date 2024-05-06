@@ -3,6 +3,7 @@ package com.group.libraryapp.controller.fruit;
 import com.group.libraryapp.dto.fruit.request.FruitCreateRequest;
 import com.group.libraryapp.dto.fruit.request.FruitSellRequest;
 import com.group.libraryapp.dto.fruit.response.FruitResponse;
+import com.group.libraryapp.dto.fruit.response.FruitStatResponse;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,6 +58,30 @@ public class FruitController {
 
         String sql = "UPDATE fruit SET is_sold = true WHERE id = ?";
         jdbcTemplate.update(sql, request.getId());
+    }
+
+
+    @GetMapping("/fruit/stat")
+    public FruitStatResponse statFruit(@RequestParam String name) {
+        String salesSql = "SELECT price FROM fruit WHERE name = ? and is_sold = true";
+        List<Long> salePrices = jdbcTemplate.query(salesSql, (rs, rowNum) -> {
+            return rs.getLong("price");
+        }, name);
+        long salesAmount = salePrices.stream()
+                .mapToLong(i -> i)
+                .sum();
+
+
+        String notSaleSql = "SELECT price FROM fruit WHERE name = ? and is_sold = false";
+        List<Long> notSalePrices = jdbcTemplate.query(notSaleSql, (rs, rowNum) -> {
+            return rs.getLong("price");
+        }, name);
+        long notSalesAmount = notSalePrices.stream()
+                .mapToLong(i -> i)
+                .sum();
+
+        return new FruitStatResponse(salesAmount, notSalesAmount);
+
     }
 
 }
