@@ -1,6 +1,7 @@
 package com.group.libraryapp.controller.fruit;
 
 import com.group.libraryapp.dto.fruit.request.FruitCreateRequest;
+import com.group.libraryapp.dto.fruit.request.FruitSellRequest;
 import com.group.libraryapp.dto.fruit.response.FruitResponse;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +41,22 @@ public class FruitController {
             boolean isSold = rs.getBoolean("is_sold");
             return new FruitResponse(id, name, price, warehousingDate, isSold);
         });
+    }
+
+
+    @PutMapping("/fruit")
+    public void sellFruit(@RequestBody FruitSellRequest request) {
+        String reqdSql = "SELECT * FROM fruit WHERE id = ?";
+        boolean isFruitNotExist = jdbcTemplate.query(reqdSql,
+                (rs, rowNum) -> 0,
+                request.getId()).isEmpty();
+
+        if (isFruitNotExist) {
+            throw new IllegalArgumentException();
+        }
+
+        String sql = "UPDATE fruit SET is_sold = true WHERE id = ?";
+        jdbcTemplate.update(sql, request.getId());
     }
 
 }
