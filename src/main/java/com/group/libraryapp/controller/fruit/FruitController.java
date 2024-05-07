@@ -63,25 +63,19 @@ public class FruitController {
 
     @GetMapping("/fruit/stat")
     public FruitStatResponse statFruit(@RequestParam String name) {
-        String salesSql = "SELECT price FROM fruit WHERE name = ? and is_sold = true";
-        List<Long> salePrices = jdbcTemplate.query(salesSql, (rs, rowNum) -> {
-            return rs.getLong("price");
-        }, name);
-        long salesAmount = salePrices.stream()
-                .mapToLong(i -> i)
-                .sum();
+        String salesSql = "SELECT SUM(price) FROM fruit WHERE name = ?" +
+                "GROUP BY is_sold HAVING is_sold = true";
+        long salesAmount = jdbcTemplate.query(salesSql, (rs, rowNum) -> {
+            return rs.getLong("SUM(price)");
+        }, name).get(0);
 
-
-        String notSaleSql = "SELECT price FROM fruit WHERE name = ? and is_sold = false";
-        List<Long> notSalePrices = jdbcTemplate.query(notSaleSql, (rs, rowNum) -> {
-            return rs.getLong("price");
-        }, name);
-        long notSalesAmount = notSalePrices.stream()
-                .mapToLong(i -> i)
-                .sum();
+        String notSaleSql = "SELECT SUM(price) FROM fruit WHERE name = ?" +
+                "GROUP BY is_sold HAVING is_sold = false";
+        long notSalesAmount = jdbcTemplate.query(notSaleSql, (rs, rowNum) -> {
+            return rs.getLong("SUM(price)");
+        }, name).get(0);
 
         return new FruitStatResponse(salesAmount, notSalesAmount);
-
     }
 
 }
