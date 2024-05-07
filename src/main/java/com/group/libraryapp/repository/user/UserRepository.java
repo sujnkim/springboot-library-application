@@ -2,9 +2,11 @@ package com.group.libraryapp.repository.user;
 
 import com.group.libraryapp.dto.user.response.UserResponse;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class UserRepository {
 
     private final JdbcTemplate jdbcTemplate;
@@ -14,13 +16,13 @@ public class UserRepository {
     }
 
 
-    public void saveUser(String name, Integer age){
+    public void saveUser(String name, Integer age) {
         String sql = "INSERT INTO user(name, age) VALUES(?,?)";
         jdbcTemplate.update(sql, name, age);
     }
 
 
-    public List<UserResponse> getUsers(){
+    public List<UserResponse> getUsers() {
         String sql = "SELECT * FROM user";
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
             long id = rs.getLong("id");
