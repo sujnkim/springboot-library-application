@@ -65,15 +65,13 @@ public class FruitController {
     public FruitStatResponse statFruit(@RequestParam String name) {
         String salesSql = "SELECT SUM(price) FROM fruit WHERE name = ?" +
                 "GROUP BY is_sold HAVING is_sold = true";
-        long salesAmount = jdbcTemplate.query(salesSql, (rs, rowNum) -> {
-            return rs.getLong("SUM(price)");
-        }, name).get(0);
+        long salesAmount = jdbcTemplate.query(salesSql, (rs, rowNum) ->
+                rs.getLong("SUM(price)"), name).get(0);
 
         String notSaleSql = "SELECT SUM(price) FROM fruit WHERE name = ?" +
                 "GROUP BY is_sold HAVING is_sold = false";
-        long notSalesAmount = jdbcTemplate.query(notSaleSql, (rs, rowNum) -> {
-            return rs.getLong("SUM(price)");
-        }, name).get(0);
+        long notSalesAmount = jdbcTemplate.query(notSaleSql, (rs, rowNum) ->
+                rs.getLong("SUM(price)"), name).get(0);
 
         return new FruitStatResponse(salesAmount, notSalesAmount);
     }
