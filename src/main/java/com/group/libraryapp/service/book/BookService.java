@@ -8,6 +8,7 @@ import com.group.libraryapp.domain.user.User;
 import com.group.libraryapp.domain.user.UserRepository;
 import com.group.libraryapp.dto.book.request.BookCreateRequest;
 import com.group.libraryapp.dto.book.request.BookLoanRequest;
+import com.group.libraryapp.dto.book.request.BookReturnRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,6 +51,21 @@ public class BookService {
 
         //5. 유저 정보와 책 정보를 기반으로 UserLoanHistory를 저장
         userLoanHistoryRepository.save(new UserLoanHistory(user.getId(), book.getName()));
+    }
+
+
+    @Transactional
+    public void returnBook(BookReturnRequest request) {
+        //1. 유저 정보를 가져온다
+        User user = userRepository.findByName(request.getUserName())
+                .orElseThrow(IllegalArgumentException::new);
+
+        //2. 대출 기록을 찾는다
+        UserLoanHistory history = userLoanHistoryRepository.findByUserIdAndBookName(user.getId(), request.getBookName())
+                .orElseThrow(IllegalArgumentException::new);
+
+        //3. 대출 기록 수정
+        history.doReturn();
     }
 
 }
