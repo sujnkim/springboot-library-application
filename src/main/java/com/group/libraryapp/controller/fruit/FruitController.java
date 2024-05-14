@@ -4,19 +4,19 @@ import com.group.libraryapp.dto.fruit.request.FruitCreateRequest;
 import com.group.libraryapp.dto.fruit.request.FruitSellRequest;
 import com.group.libraryapp.dto.fruit.response.FruitResponse;
 import com.group.libraryapp.dto.fruit.response.FruitStatResponse;
-import com.group.libraryapp.service.fruit.FruitService;
+import com.group.libraryapp.service.fruit.FruitServiceV1;
+import com.group.libraryapp.service.fruit.FruitServiceV2;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
 public class FruitController {
 
-    private final FruitService fruitService;
+    private final FruitServiceV2 fruitService;
 
-    public FruitController(FruitService fruitService) {
+    public FruitController(FruitServiceV2 fruitService) {
         this.fruitService = fruitService;
     }
 
