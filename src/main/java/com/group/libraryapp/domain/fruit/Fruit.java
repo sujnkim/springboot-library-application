@@ -30,11 +30,16 @@ public class Fruit {
 
     }
 
-    public Fruit(String name, long price, LocalDate warehousingDate, boolean isSold) {
+    public Fruit(String name, long price, LocalDate warehousingDate) {
         this.name = name;
         this.price = price;
         this.warehousingDate = warehousingDate;
         this.isSold = false;
+    }
+
+
+    public void updateSoldState(){
+        this.isSold = true;
     }
 
 }
