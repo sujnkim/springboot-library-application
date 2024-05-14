@@ -12,11 +12,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class FruitService {
+public class FruitServiceV1 {
 
     private final FruitJdbcRepository fruitRepository;
 
-    public FruitService(@Qualifier("fruitMySqlRepository") FruitJdbcRepository fruitRepository) {
+    public FruitServiceV1(@Qualifier("fruitMySqlRepository") FruitJdbcRepository fruitRepository) {
         this.fruitRepository = fruitRepository;
     }
 
