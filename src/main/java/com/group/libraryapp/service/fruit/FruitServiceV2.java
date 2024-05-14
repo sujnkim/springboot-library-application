@@ -4,11 +4,13 @@ import com.group.libraryapp.domain.fruit.Fruit;
 import com.group.libraryapp.dto.fruit.request.FruitCreateRequest;
 import com.group.libraryapp.dto.fruit.request.FruitSellRequest;
 import com.group.libraryapp.dto.fruit.response.FruitCountResponse;
+import com.group.libraryapp.dto.fruit.response.FruitPriceOptionResponse;
 import com.group.libraryapp.dto.fruit.response.FruitResponse;
 import com.group.libraryapp.dto.fruit.response.FruitStatResponse;
 import com.group.libraryapp.repository.fruit.FruitRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -52,6 +54,24 @@ public class FruitServiceV2 {
 
     public FruitCountResponse getFruitCount(String name) {
         return new FruitCountResponse(fruitRepository.countAllByName(name));
+    }
+
+
+    public List<FruitPriceOptionResponse> getFruitsByPriceOption(String option, long standardPrice) {
+        List<Fruit> fruits;
+
+        if (option.equals("GTE")) {
+            fruits = fruitRepository.findByPriceGreaterThanEqual(standardPrice);
+        } else if (option.equals("LTE")) {
+            fruits = fruitRepository.findByPriceLessThanEqual(standardPrice);
+        } else {
+            throw new IllegalArgumentException();
+        }
+
+        return fruits.stream()
+                .filter(fruit -> fruit.isSold() == false)
+                .map(fruit -> new FruitPriceOptionResponse(fruit))
+                .toList();
     }
 
 
