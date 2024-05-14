@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public class FruitMemoryRepository implements FruitRepository {
+public class FruitMemoryRepository implements FruitJdbcRepository {
 
     @Override
     public void saveFruit(String name, Long price, LocalDate warehousingDate) {

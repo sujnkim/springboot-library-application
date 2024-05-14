@@ -4,8 +4,7 @@ import com.group.libraryapp.dto.fruit.request.FruitCreateRequest;
 import com.group.libraryapp.dto.fruit.request.FruitSellRequest;
 import com.group.libraryapp.dto.fruit.response.FruitResponse;
 import com.group.libraryapp.dto.fruit.response.FruitStatResponse;
-import com.group.libraryapp.repository.fruit.FruitMySqlRepository;
-import com.group.libraryapp.repository.fruit.FruitRepository;
+import com.group.libraryapp.repository.fruit.FruitJdbcRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +14,9 @@ import java.util.List;
 @Service
 public class FruitService {
 
-    private final FruitRepository fruitRepository;
+    private final FruitJdbcRepository fruitRepository;
 
-    public FruitService(@Qualifier("fruitMySqlRepository") FruitRepository fruitRepository) {
+    public FruitService(@Qualifier("fruitMySqlRepository") FruitJdbcRepository fruitRepository) {
         this.fruitRepository = fruitRepository;
     }
 

@@ -5,7 +5,7 @@ import com.group.libraryapp.dto.fruit.response.FruitResponse;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface FruitRepository {
+public interface FruitJdbcRepository {
 
     public void saveFruit(String name, Long price, LocalDate warehousingDate);
 
