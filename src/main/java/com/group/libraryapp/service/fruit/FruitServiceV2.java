@@ -37,6 +37,19 @@ public class FruitServiceV2 {
     }
 
 
+    public FruitStatResponse statFruit(String name) {
+        long salesAmount = fruitRepository.findAllByNameAndIsSold(name, true).stream()
+                .mapToLong(fruit -> fruit.getPrice())
+                .sum();
+
+        long notSalesAmount = fruitRepository.findAllByNameAndIsSold(name, false).stream()
+                .mapToLong(fruit -> fruit.getPrice())
+                .sum();
+
+        return new FruitStatResponse(salesAmount, notSalesAmount);
+    }
+
+
     public FruitCountResponse getFruitCount(String name) {
         return new FruitCountResponse(fruitRepository.countAllByName(name));
     }
@@ -50,17 +63,4 @@ public class FruitServiceV2 {
         fruitRepository.save(fruit);
     }
 
-
-    public FruitStatResponse statFruit(String name) {
-
-        long salesAmount = fruitRepository.findAllByNameAndIsSold(name, true).stream()
-                .mapToLong(fruit -> fruit.getPrice())
-                .sum();
-
-        long notSalesAmount = fruitRepository.findAllByNameAndIsSold(name, false).stream()
-                .mapToLong(fruit -> fruit.getPrice())
-                .sum();
-
-        return new FruitStatResponse(salesAmount, notSalesAmount);
-    }
 }

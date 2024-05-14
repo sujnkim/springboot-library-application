@@ -33,6 +33,11 @@ public class FruitController {
         return fruitService.getFruits();
     }
 
+    @GetMapping("/fruit/stat")
+    public FruitStatResponse statFruit(@RequestParam String name) {
+        return fruitService.statFruit(name);
+    }
+
 
     @GetMapping("/fruit/count")
     public FruitCountResponse getFruitCount(@RequestParam String name) {
@@ -43,12 +48,6 @@ public class FruitController {
     @PutMapping("/fruit")
     public void sellFruit(@RequestBody FruitSellRequest request) {
         fruitService.sellFruit(request);
-    }
-
-
-    @GetMapping("/fruit/stat")
-    public FruitStatResponse statFruit(@RequestParam String name) {
-        return fruitService.statFruit(name);
     }
 
 }
