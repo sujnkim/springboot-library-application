@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public class FruitMySqlRepository implements FruitRepository {
+public class FruitMySqlRepository implements FruitJdbcRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
