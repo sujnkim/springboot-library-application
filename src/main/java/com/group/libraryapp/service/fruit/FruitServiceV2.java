@@ -3,6 +3,7 @@ package com.group.libraryapp.service.fruit;
 import com.group.libraryapp.domain.fruit.Fruit;
 import com.group.libraryapp.dto.fruit.request.FruitCreateRequest;
 import com.group.libraryapp.dto.fruit.request.FruitSellRequest;
+import com.group.libraryapp.dto.fruit.response.FruitCountResponse;
 import com.group.libraryapp.dto.fruit.response.FruitResponse;
 import com.group.libraryapp.dto.fruit.response.FruitStatResponse;
 import com.group.libraryapp.repository.fruit.FruitRepository;
@@ -33,6 +34,11 @@ public class FruitServiceV2 {
                         fruit.getWarehousingDate(),
                         fruit.isSold()))
                 .toList();
+    }
+
+
+    public FruitCountResponse getFruitCount(String name) {
+        return new FruitCountResponse(fruitRepository.countAllByName(name));
     }
 
 

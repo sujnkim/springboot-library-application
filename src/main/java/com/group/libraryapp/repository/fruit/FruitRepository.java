@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface FruitRepository extends JpaRepository<Fruit, Long> {
 
+    long countAllByName(String name);
+
     List<Fruit> findAllByNameAndIsSold(String name, boolean isSold);
 
 }
